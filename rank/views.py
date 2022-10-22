@@ -34,8 +34,10 @@ def get_rank_list():
             pass_count += 1
             pass_list.append(log.problem_id)
             consume_time += (log.submit_time.timestamp() - start_time) + penalty * (log.attempt_times - 1)
-        rank_list.append(
-            {'id': user.id, 'pass_count': pass_count, 'consume_time': consume_time})
+        if pass_count != 0:
+            rank_list.append(
+                {'id': user.id, 'pass_count': pass_count, 'consume_time': consume_time, 'username': user.username,
+                 'pass_list': pass_list})
     rank_list.sort(key=lambda x: (x['pass_count'], x['consume_time']))
     return rank_list
 
